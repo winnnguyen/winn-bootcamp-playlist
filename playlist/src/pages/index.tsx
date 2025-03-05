@@ -1,5 +1,13 @@
+import Header from '../components/Header'
+import Main from '../components/Main'
+import Info from '../components/Info'
+
 export default function Home() {
   return (
-    <h1 className="text-4xl font-bold">Hello World</h1>
+    <div className='flex flex-col min-h-screen'>
+      <Header />
+      <Main />
+      <Info />
+    </div>
   );
 }
