@@ -5,15 +5,15 @@ interface Song {
     title: string;
     artist: string;
     album: string;
-    duration: number; // in seconds
+    duration: string; // in seconds
   }
   
   // Define a Playlist interface that includes an array of Song objects
   interface Playlist {
     id: string;
-    name: string;
+    title: string;
     description: string;
-    songs: Song[];
+    songs: Song[] | null;
   }
 
   
