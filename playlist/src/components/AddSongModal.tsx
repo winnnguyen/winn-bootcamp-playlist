@@ -1,10 +1,12 @@
+import { PlaylistContext } from '@/context/PlaylistContext';
 import React from 'react';
+import { useContext } from 'react';
 
-export default function AddSongModal({isOpen, onClose, p} : any) {
+export default function AddSongModal({isOpen, onClose, pl} : any) {
     if (!isOpen) {
         return null;
     }
-
+    const { editPlaylist } = useContext(PlaylistContext)!;
     function handleSubmit(event : any) {
         event.preventDefault()
         const formEl = event.currentTarget;
@@ -14,13 +16,19 @@ export default function AddSongModal({isOpen, onClose, p} : any) {
         const newAlbum = formData.get('album') as string;
         const newDuration = formData.get('duration') as string;
         const newSong : Song = {
-            id: "4",
+            id: Date.now().toString(),
             title: newTitle,
             artist: newArtist,
             album: newAlbum,
             duration: newDuration
         }
-        p.songs.push(newSong);
+        const replacementPlaylist : Playlist = {
+            id: pl.id,
+            title: pl.title,
+            description: pl.description,
+            songs: [...pl.songs, newSong]
+        }
+        editPlaylist(replacementPlaylist);
         formEl.reset();
         onClose();
     }

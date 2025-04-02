@@ -1,19 +1,23 @@
 import React from 'react';
+import { useContext, useState } from 'react'
+import { PlaylistContext } from '@/context/PlaylistContext';
 
 export default function EditPlaylistModal({isOpen, onClose, currPlaylist} : any) {
-    if (!isOpen) {
-        return null;
-    }
+    if (!isOpen || !currPlaylist) return null;
+
+    const context = useContext(PlaylistContext);
+    if (!context) return null;
+
+    const { editPlaylist } = context;
 
     function handleSubmit(event : any) {
         event.preventDefault()
         const formEl = event.currentTarget;
         const formData = new FormData(formEl);
-        const newTitle = formData.get('title') as string;
-        const newDescription = formData.get('description') as string;
-        const newP = p.find((x : Playlist) => currPlaylist.id === x.id);
-        newP.title = newTitle;
-        newP.description = newDescription;
+        const newTitle = (formData.get('title') as string) || "";
+        const newDescription = (formData.get('description') as string) || "";
+        const updatedPlaylist = { ...currPlaylist, title: newTitle, description: newDescription };
+        editPlaylist(updatedPlaylist);
         formEl.reset();
         onClose();
     }

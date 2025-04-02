@@ -1,25 +1,29 @@
 import React from 'react';
-import Playlist from '@/types/playlist';
-import { usePlaylist } from '../context/PlaylistContext';
+import { useContext } from 'react';
+import { PlaylistContext } from '../context/PlaylistContext';
 
 export default function AddPlaylistModal({isOpen, onClose} : any) {
     if (!isOpen) {
         return null;
     }
-    const { playlists, setPlaylists } = usePlaylist();
+    const context = useContext(PlaylistContext);
+    if (!context) return null;
+
+    const { addPlaylist } = context;
     function handleSubmit(event : any) {
         event.preventDefault()
         const formEl = event.currentTarget;
         const formData = new FormData(formEl);
-        const newTitle = formData.get('title') as string;
-        const newDescription = formData.get('description') as string;
+        const newTitle : string = formData.get('title') as string;
+        const newDescription : string = formData.get('description') as string;
+        const newSongs : Song[] = []
         const newPlaylist : Playlist = {
-            id: "4",
+            id: Date.now().toString(),
             title: newTitle,
             description: newDescription,
-            songs: null,
+            songs: newSongs,
         }
-        setPlaylists([...playlists, newPlaylist]);
+        addPlaylist(newPlaylist);
         formEl.reset();
         onClose();
     }

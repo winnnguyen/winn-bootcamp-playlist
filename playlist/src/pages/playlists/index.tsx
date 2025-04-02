@@ -1,16 +1,19 @@
 import { PlaylistComponent } from '@/components/PlaylistComponent';
 import Link from 'next/link';
-import { useState, } from 'react';
+import { useState, useContext } from 'react';
 import AddPlaylistModal from '@/components/AddPlaylistModal';
 import EditPlaylistModal from '@/components/EditPlaylistModal';
-import { usePlaylist } from '../../context/PlaylistContext';
+import { PlaylistContext } from '@/context/PlaylistContext';
 
 export default function Home() {
-    const { playlists, setPlaylists } = usePlaylist();
-    const playlistEl = playlists.map((el) =>
-        <div className='flex flex-row justify-center items-center'>
+    const {playlists, setPlaylists} = useContext(PlaylistContext)!;
+
+    if (!playlists) return <div>Loading...</div>; // <-handles the first empty render
+
+    const playlistEl = playlists.map((el) => 
+            <div className='flex flex-row justify-center items-center'>
             <button onClick={() => deletePlaylist(el)} className='cursor-pointer mr-10 font-extrabold text-2xl'>x</button>
-            <Link href={`/playlists/${el.id}`}>
+            <Link href={`/playlists/${el.id.toString()}`}>
                 <PlaylistComponent 
                     id = {el.id}
                     key = {el.id}

@@ -1,7 +1,7 @@
 
 // Define a Song interface
 interface Song {
-    id: string;
+    id: String;
     title: string;
     artist: string;
     album: string;
@@ -10,7 +10,7 @@ interface Song {
   
   // Define a Playlist interface that includes an array of Song objects
   interface Playlist {
-    id: string;
+    id: String;
     title: string;
     description: string;
     songs: Song[] | null;
