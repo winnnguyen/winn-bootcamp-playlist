@@ -1,12 +1,13 @@
-import {playlist} from '../../data/example_data';
 import { PlaylistComponent } from '@/components/PlaylistComponent';
 import Link from 'next/link';
 import { useState, } from 'react';
 import AddPlaylistModal from '@/components/AddPlaylistModal';
 import EditPlaylistModal from '@/components/EditPlaylistModal';
+import { usePlaylist } from '../../context/PlaylistContext';
 
 export default function Home() {
-    const playlistEl = playlist.map((el) =>
+    const { playlists, setPlaylists } = usePlaylist();
+    const playlistEl = playlists.map((el) =>
         <div className='flex flex-row justify-center items-center'>
             <button onClick={() => deletePlaylist(el)} className='cursor-pointer mr-10 font-extrabold text-2xl'>x</button>
             <Link href={`/playlists/${el.id}`}>
@@ -41,16 +42,8 @@ export default function Home() {
             </button>
         </div>
     )
-    const [, forceUpdate] = useState(0);
-    const triggerRerender = () => {
-        forceUpdate(prev => prev + 1);
-    };
     function deletePlaylist(p : Playlist ) {
-        const index = playlist.findIndex((x) => x.id === p.id);
-        if (index !== -1) {
-            playlist.splice(index, 1);
-        }
-        triggerRerender()
+        setPlaylists((prev) => prev.filter((playlist) => playlist.id !== p.id));
     }
 
     const [selectedPlaylistEdit, setSelectedPlaylistEdit] = useState<Playlist | null>(null);
@@ -64,8 +57,8 @@ export default function Home() {
             <div className='flex mt-10 items-center flex-col h-screen'>
                 {playlistEl}
             </div>
-                <AddPlaylistModal isOpen={isOpenAddPlaylist} onClose={() => setOpenAddPlaylist(false)} p={playlist}/>
-                <EditPlaylistModal isOpen={isOpenEditPlaylist} onClose={() => setOpenEditPlaylist(false)} currPlaylist={selectedPlaylistEdit} p={playlist} />
+                <AddPlaylistModal isOpen={isOpenAddPlaylist} onClose={() => setOpenAddPlaylist(false)}/>
+                <EditPlaylistModal isOpen={isOpenEditPlaylist} onClose={() => setOpenEditPlaylist(false)} currPlaylist={selectedPlaylistEdit}/>
             <button 
                 className="fixed bottom-10 right-10 w-17 h-17 rounded-full bg-black text-white text-3xl shadow-lg hover:bg-[white] hover:text-black duration-300 delay-50"
                 onClick={() => setOpenAddPlaylist((prevOpen) => !prevOpen)}>

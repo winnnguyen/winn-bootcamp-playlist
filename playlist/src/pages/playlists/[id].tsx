@@ -1,13 +1,17 @@
 import { useRouter } from 'next/router'
-import {playlist} from '../../data/example_data'
 import { SongComponent } from '@/components/SongComponent';
 import { useState } from 'react';
 import AddSongModal from '@/components/AddSongModal';
+import { usePlaylist } from '../../context/PlaylistContext';
 
 export default function Playlist() {
+    const { playlists, setPlaylists } = usePlaylist();
     const router = useRouter();
     const { id } = router.query;
-    const currPlaylist = playlist.find((p: Playlist) => p.id === id);
+    const currPlaylist = playlists.find((p: Playlist) => p.id === id);
+    if (!currPlaylist) {
+        return <div>Error...</div>; // or redirect, or empty state
+    }
     const songsList = currPlaylist.songs.map((song: Song) => 
         <div className='flex flex-row justify-center items-center'>
         <button className='cursor-pointer mr-10 font-extrabold text-2xl' onClick={() => deleteSong(song)}>x</button>
@@ -19,15 +23,16 @@ export default function Playlist() {
             album = {song.album}
         />
         </div>
-    )
-    const [, forceUpdate] = useState(0);
-    const triggerRerender = () => {
-        forceUpdate(prev => prev + 1);
+    );
+    function deleteSong(s: Song) {
+        setPlaylists(prev => 
+            prev.map(p => 
+                p.id === currPlaylist.id 
+                    ? { ...p, songs: p.songs.filter((song:Song) => song.id !== s.id) } 
+                    : p
+            )
+        );
     };
-    function deleteSong(s :Song) {
-        currPlaylist.songs = currPlaylist.songs.filter((x: Song) => s.id !== x.id);
-        triggerRerender()
-    }
     const [openAddSong, setOpenAddSong] = useState(false);
 
     return(

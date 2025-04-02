@@ -1,10 +1,12 @@
 import React from 'react';
-import Playlist from '@/types/playlist'
+import Playlist from '@/types/playlist';
+import { usePlaylist } from '../context/PlaylistContext';
 
-export default function AddPlaylistModal({isOpen, onClose, p} : any) {
+export default function AddPlaylistModal({isOpen, onClose} : any) {
     if (!isOpen) {
         return null;
     }
+    const { playlists, setPlaylists } = usePlaylist();
     function handleSubmit(event : any) {
         event.preventDefault()
         const formEl = event.currentTarget;
@@ -17,7 +19,7 @@ export default function AddPlaylistModal({isOpen, onClose, p} : any) {
             description: newDescription,
             songs: null,
         }
-        p.push(newPlaylist);
+        setPlaylists([...playlists, newPlaylist]);
         formEl.reset();
         onClose();
     }

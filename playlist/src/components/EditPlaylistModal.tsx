@@ -1,7 +1,6 @@
 import React from 'react';
-import { useState } from 'react';
 
-export default function EditPlaylistModal({isOpen, onClose, currPlaylist, p} : any) {
+export default function EditPlaylistModal({isOpen, onClose, currPlaylist} : any) {
     if (!isOpen) {
         return null;
     }
