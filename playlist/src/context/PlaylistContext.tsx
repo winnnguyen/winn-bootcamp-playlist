@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { Playlist } from '../types/playlist';
+import { Playlist } from '@/types/playlist';
 
 interface PlaylistContextType {
     playlists: Playlist[];
@@ -19,7 +19,7 @@ export const PlaylistProvider = ({ children }: any) => {
             try {
                 const res = await fetch('/api/playlists');
                 const data = await res.json();
-                setPlaylists(data.playlists);
+                setPlaylists(data);
             } catch(e) {
                 console.log('Failed to fetch playlist', e);
             }
