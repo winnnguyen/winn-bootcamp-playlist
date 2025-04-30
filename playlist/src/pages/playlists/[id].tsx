@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { SongComponent } from '@/components/SongComponent';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AddSongModal from '@/components/AddSongModal';
 import { useContext } from 'react';
 import { PlaylistContext } from '@/context/PlaylistContext';
@@ -34,6 +34,7 @@ export default function Playlist() {
             )
         );
     };
+
     const [openAddSong, setOpenAddSong] = useState(false);
 
     return(
@@ -42,7 +43,6 @@ export default function Playlist() {
                 <h1 className='text-6xl font-bold mb-2 text-[#ddd5f3]'>{currPlaylist.title}</h1>
                 <h1 className='text-2xl'>"{currPlaylist.description}"</h1>
             </div>
-            <h1>{currPlaylist.songs.title}</h1>
             <div className='flex justify-center items-center flex-col mt-10'>
                 {songsList}
             </div>
