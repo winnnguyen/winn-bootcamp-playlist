@@ -1,3 +1,5 @@
+import { Playlist } from '@/types/playlist';
+
 export function PlaylistComponent(playlist: Playlist) {
     return (
             <div className="flex justify-center items-center flex-col m-3 bg-black h-40 w-150 rounded-md text-[#ddd5f3] text-1xl cursor-pointer hover:text-black hover:bg-[white] duration-300 delay-50">

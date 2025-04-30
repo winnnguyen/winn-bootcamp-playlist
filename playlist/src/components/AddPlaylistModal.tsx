@@ -1,6 +1,7 @@
 import React from 'react';
 import { useContext } from 'react';
 import { PlaylistContext } from '../context/PlaylistContext';
+import { Song, Playlist } from '@/types/playlist';
 
 export default function AddPlaylistModal({isOpen, onClose} : any) {
     if (!isOpen) {

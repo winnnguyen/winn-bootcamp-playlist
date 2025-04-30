@@ -4,6 +4,7 @@ import { useState, useContext } from 'react';
 import AddPlaylistModal from '@/components/AddPlaylistModal';
 import EditPlaylistModal from '@/components/EditPlaylistModal';
 import { PlaylistContext } from '@/context/PlaylistContext';
+import { Playlist } from '@/types/playlist';
 
 export default function Home() {
     const {playlists, setPlaylists} = useContext(PlaylistContext)!;
@@ -16,7 +17,6 @@ export default function Home() {
             <Link href={`/playlists/${el.id.toString()}`}>
                 <PlaylistComponent 
                     id = {el.id}
-                    key = {el.id}
                     title = {el.title}
                     description = {el.description}
                     songs = {el.songs}
