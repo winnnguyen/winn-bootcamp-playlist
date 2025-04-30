@@ -10,7 +10,7 @@ export default function AddSongModal({isOpen, onClose, pl} : any) {
     const [searchInput, setSearchInput] = useState('');
     const [results, setResults] = useState([]);
     const { editPlaylist } = useContext(PlaylistContext)!;
-    const [selectedSong, setSelectedSong] = useState(null);
+    const [selectedSong, setSelectedSong] = useState<Song | null>(null);
 
     const searchTracks = async (term: string) => {
         const res = await fetch(`/api/spotify-search?q=${encodeURIComponent(term)}`);
