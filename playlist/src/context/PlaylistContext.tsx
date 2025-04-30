@@ -29,7 +29,7 @@ export const PlaylistProvider = ({ children }: any) => {
 
     const addPlaylist = (p: Playlist) => setPlaylists(prev => [...prev, p]);
     const editPlaylist = (p: Playlist) => setPlaylists(prev => prev.map(pl => (pl.id === p.id ? p : pl)));
-    const deletePlaylist = (id: number) => setPlaylists(prev => prev.filter(pl => pl.id !== id));
+    const deletePlaylist = (id: number) => setPlaylists(prev => prev.filter(pl => Number(pl.id) !== id));
 
     return (
         <PlaylistContext.Provider value={{ playlists, setPlaylists, addPlaylist, editPlaylist, deletePlaylist }}>

@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import AddSongModal from '@/components/AddSongModal';
 import { useContext } from 'react';
 import { PlaylistContext } from '@/context/PlaylistContext';
+import { Song, Playlist } from '@/types/playlist';
 
-export default function Playlist() {
+export default function Playlists() {
     const { playlists, setPlaylists } = useContext(PlaylistContext)!;
     const router = useRouter();
     const { id } = router.query;
@@ -13,7 +14,7 @@ export default function Playlist() {
     if (!currPlaylist) {
         return <div>Loading...</div>;
     }
-    const songsList = currPlaylist.songs.map((song: Song) => 
+    const songsList = currPlaylist.songs!.map((song: Song) => 
         <div className='flex flex-row justify-center items-center'>
         <button className='cursor-pointer mr-10 font-extrabold text-2xl' onClick={() => deleteSong(song)}>x</button>
         <SongComponent
@@ -28,8 +29,8 @@ export default function Playlist() {
     function deleteSong(s: Song) {
         setPlaylists(prev => 
             prev.map(p => 
-                p.id === currPlaylist.id 
-                    ? { ...p, songs: p.songs.filter((song:Song) => song.id !== s.id) } 
+                p.id === currPlaylist!.id 
+                    ? { ...p, songs: p.songs!.filter((song:Song) => song.id !== s.id) } 
                     : p
             )
         );

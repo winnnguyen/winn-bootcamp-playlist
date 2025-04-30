@@ -1,5 +1,5 @@
 import React from 'react';
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { PlaylistContext } from '@/context/PlaylistContext';
 
 export default function EditPlaylistModal({isOpen, onClose, currPlaylist} : any) {

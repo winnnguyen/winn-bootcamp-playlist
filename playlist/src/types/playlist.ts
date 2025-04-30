@@ -1,6 +1,6 @@
 
 // Define a Song interface
-interface Song {
+export interface Song {
     id: String;
     title: string;
     artist: string;
@@ -9,7 +9,7 @@ interface Song {
   }
   
   // Define a Playlist interface that includes an array of Song objects
-  interface Playlist {
+export interface Playlist {
     id: String;
     title: string;
     description: string;
